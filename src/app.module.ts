@@ -5,6 +5,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Employee } from './employees/entities/employee.entity';
 import { Department } from './employees/entities/department.entity';
 import { EmployeesModule } from './employees/module/employees.module';
+import { AuthModule } from './auth/auth.module';
+import { User } from './auth/entities/user.entity';
 
 @Module({
   imports: [
@@ -15,10 +17,11 @@ import { EmployeesModule } from './employees/module/employees.module';
       username: 'root',
       password: '',
       database: 'employee',
-      entities: [Employee, Department],
+      entities: [Employee, Department, User],
       synchronize: true,
     }),
     EmployeesModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

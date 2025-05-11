@@ -34,25 +34,28 @@ export class EmployeesService {
       where: { id },
       relations: ['department'],
     });
-    
+
     if (!employee) {
       throw new NotFoundException(`Employee with ID ${id} not found`);
     }
-    
+
     return employee;
   }
 
-  async update(id: number, updateEmployeeDto: UpdateEmployeeDto): Promise<Employee> {
+  async update(
+    id: number,
+    updateEmployeeDto: UpdateEmployeeDto,
+  ): Promise<Employee> {
     const employee = await this.findOne(id);
-    
+
     Object.assign(employee, updateEmployeeDto);
-    
+
     return await this.employeeRepository.save(employee);
   }
 
   async remove(id: number): Promise<void> {
     const result = await this.employeeRepository.delete(id);
-    
+
     if (result.affected === 0) {
       throw new NotFoundException(`Employee with ID ${id} not found`);
     }
